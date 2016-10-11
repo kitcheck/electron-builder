@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "httpRequestTest.js",
+  "sourceRoot": "",
+  "sources": [
+    "../src/httpRequestTest.ts"
+  ],
+  "names": [],
+  "mappings": ";;AAAA,wBAAiB,AACjB,AAAC,AADiC;AAClC,8BAAyB,AACzB,AAAC,AAD8C;AAC/C,qBAAuB,AACvB,AAAC,AAD0B;AAC3B,yBAA4B,AAC5B,AAAC,AADmC;AACpC,6BAA2B,AAC3B,AAAC,AADgD;AACjD,MAAY,AAAI,eAAM,AAGtB,AAAC,AAH2B;AAG5B,MAAM,AAAS,YAAG,AAAO,QAAC,AAAkB,AAAC;AAE7C,QAAI,QAAC,AAA6B,+BAAE;AAClC,UAAM,AAAQ,WAAG,AAAI,KAAC,AAAI,KAAC,KAAM,AAAE,AAAE,cAAG,AAAO,QAAC,AAAG,SAAI,SAAW,YAAC,AAAC,AAAC,GAAC,AAAQ,SAAC,AAAK,AAAC,MAAE,KAAE,AAAI,KAAC,AAAG,AAAE,MAAC,AAAQ,AAAE,YAAE,AAAS,AAAC;AAC1H,AAAM,WAAC,cAAQ,SAAC,AAA6E,+EAAE,AAAQ,AAAC,UACrG,AAAI,KAAC,MAAM,aAAU,WAAC,AAAQ,AAAC,UAAC,AAAM,AAAE,AAAC,AAC9C;AAAC,AAAC",
+  "sourcesContent": [
+    "import test from \"./helpers/avaEx\"\nimport { download } from \"out/util/httpRequest\"\nimport { tmpdir } from \"os\"\nimport { randomBytes } from \"crypto\"\nimport { assertThat } from \"./helpers/fileAssert\"\nimport * as path from \"path\"\n\n//noinspection JSUnusedLocalSymbols\nconst __awaiter = require(\"out/util/awaiter\")\n\ntest(\"download to nonexistent dir\", () => {\n  const tempFile = path.join(tmpdir(), `${process.pid}-${randomBytes(8).toString(\"hex\")}`, Date.now().toString(), \"foo.txt\")\n  return download(\"https://drive.google.com/uc?export=download&id=0Bz3JwZ-jqfRONTkzTGlsMkM2TlE\", tempFile)\n    .then(() => assertThat(tempFile).isFile())\n})"
+  ]
+}

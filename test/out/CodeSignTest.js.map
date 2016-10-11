@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "CodeSignTest.js",
+  "sourceRoot": "",
+  "sources": [
+    "../src/CodeSignTest.ts"
+  ],
+  "names": [],
+  "mappings": ";;;;AAAA,2BAA+B,AAC/B,AAAC,AAD4C;AAC7C,6BAA2B,AAC3B,AAAC,AADgD;AACjD,wBAAiB,AACjB,AAAC,AADiC;AAClC,+BAAyB,AACzB,AAAC,AADgD;AACjD,uBAA+B,AAC/B,AAAC,AAD6C;AAC9C,sBAAuB,AAGvB,AAAC,AAHoC;AAGrC,MAAM,AAAS,YAAG,AAAO,QAAC,AAAkB,AAAC;AAE7C,MAAM,AAAM,SAAG,IAAI,MAAM,AAAE;AAE3B,AAAE,AAAC,IAAC,AAAO,QAAC,AAAG,IAAC,AAAgB,oBAAI,AAAI,AAAC,MAAC,AAAC;AACzC,AAAO,YAAC,AAAI,KAAC,AAAsE,AAAC,AACtF;AAAC,AACD,AAAI,OAAC,AAAC;AACJ,YAAI,QAAC,AAAK,MAAC,AAAiB,mBAAE;AAC5B,cAAM,AAAM,SAAG,MAAM,WAAc,eAAC,AAAM,QAAE,eAAQ,UAAE,AAAO,QAAC,AAAG,IAAC,AAAgB,AAAC;AACnF,qBAAU,WAAC,AAAM,OAAC,AAAY,AAAC,cAAC,AAAU,AAAE,AAC9C;AAAC,AAAC;AAEF,YAAI,QAAC,AAAK,MAAC,AAAiC,mCAAE;AAC5C,cAAM,AAAM,SAAG,MAAM,WAAc,eAAC,AAAM,QAAE,eAAQ,UAAE,AAAO,QAAC,AAAG,IAAC,AAAgB,AAAC;AACnF,qBAAU,WAAC,AAAM,OAAC,AAAY,AAAC,cAAC,AAAU,AAAE,AAC9C;AAAC,AAAC,AACJ;AAAC;AAED,QAAI,QAAC,AAAK,MAAC,AAA0B,4BAAE;AACrC,iBAAU,WAAC,OAAc,eAAC,AAAe,AAAC,AAAC,kBAAC,AAAS,UAAC,AAA0F,AAAC;AACjJ,iBAAU,WAAC,OAAc,eAAC,AAAU,AAAC,AAAC,aAAC,AAAS,UAAC,AAAqF,AAAC,AACzI;AAAC,AAAC",
+  "sourcesContent": [
+    "import { createKeychain } from \"out/codeSign\"\nimport { assertThat } from \"./helpers/fileAssert\"\nimport test from \"./helpers/avaEx\"\nimport { CSC_LINK } from \"./helpers/codeSignData\"\nimport { removePassword } from \"out/util/util\"\nimport { TmpDir } from \"out/util/tmp\"\n\n//noinspection JSUnusedLocalSymbols\nconst __awaiter = require(\"out/util/awaiter\")\n\nconst tmpDir = new TmpDir()\n\nif (process.env.CSC_KEY_PASSWORD == null) {\n  console.warn(\"Skip keychain-specific tests because CSC_KEY_PASSWORD is not defined\")\n}\nelse {\n  test.ifOsx(\"create keychain\", async () => {\n    const result = await createKeychain(tmpDir, CSC_LINK, process.env.CSC_KEY_PASSWORD)\n    assertThat(result.keychainName).isNotEmpty()\n  })\n\n  test.ifOsx(\"create keychain with installers\", async () => {\n    const result = await createKeychain(tmpDir, CSC_LINK, process.env.CSC_KEY_PASSWORD)\n    assertThat(result.keychainName).isNotEmpty()\n  })\n}\n\ntest.ifOsx(\"remove password from log\", async () => {\n  assertThat(removePassword(\"seq -P foo -B\")).isEqualTo(\"seq -P 2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae (sha256 hash) -B\")\n  assertThat(removePassword(\"pass:foo\")).isEqualTo(\"pass:2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae (sha256 hash)\")\n})"
+  ]
+}

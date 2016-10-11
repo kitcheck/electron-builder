@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "config.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../src/helpers/config.ts"
+  ],
+  "names": [],
+  "mappings": ";;AAAA,MAAY,AAAI,eAAM,AACtB,AAAC,AAD2B;AAC5B,qBAAuB,AAEvB,AAAC,AAF0B;AAEd,QAAQ,WAAG,AAAI,KAAC,AAAI,KAAC,KAAM,AAAE,AAAE,oCAAyB,AAAO,QAAC,AAAG,IAAC,AAAQ,SAAC,AAAE,AAAC,GAAE,AAAC;AACnF,QAAgB,mBAAG,AAAO",
+  "sourcesContent": [
+    "import * as path from \"path\"\nimport { tmpdir } from \"os\"\n\nexport const TEST_DIR = path.join(tmpdir(), `electron-builder-test-${process.pid.toString(16)}`)\nexport const ELECTRON_VERSION = \"1.4.0\""
+  ]
+}
