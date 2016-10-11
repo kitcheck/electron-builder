@@ -6,17 +6,33 @@ import { debug } from "../util/util"
 import { WinPackager } from "../winPackager"
 import { log } from "../util/log"
 
+const _ = require("lodash")
 const archiverUtil = require("archiver-utils")
 const archiver = require("archiver")
 
 //noinspection JSUnusedLocalSymbols
 const __awaiter = require("../util/awaiter")
 
+// https://github.com/ArekSredzki/electron-release-server/blob/598b010dd8d5dfc7db503bf62422cd1117472bb4/api/services/WindowsReleaseService.js#L14
+const PRERELEASE_CHANNEL_MAGINITUDE = 1000
+const PRERELEASE_CHANNELS = [
+    "alpha", "beta", "unstable", "rc"
+]
+
+function hashPrerelease(s: string[]) {
+  if (_.isString(s[0])) {
+    return ((_.indexOf(PRERELEASE_CHANNELS, s[0]) + 1) * PRERELEASE_CHANNEL_MAGINITUDE + (Number(s[1]) || 0)).toString()
+  } else {
+    return s[0]
+  }
+}
+
 export function convertVersion(version: string): string {
-  const parts = version.split("-")
-  const mainVersion = parts.shift()
-  if (parts.length > 0) {
-    return [mainVersion, parts.join("-").replace(/\./g, "")].join("-")
+  const [mainVersion, preRelease] = version.split("-")
+
+  if (preRelease) {
+    const hashedPrerelease = hashPrerelease(preRelease.split("."))
+    return `${mainVersion}.${hashedPrerelease}`
   }
   else {
     return mainVersion!
